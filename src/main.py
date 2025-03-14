@@ -1,6 +1,6 @@
 import sys
 import io
-from PyQt5.QtWidgets import QApplication, QSystemTrayIcon, QMenu
+from PyQt5.QtWidgets import QApplication, QSystemTrayIcon
 from PyQt5.QtGui import QIcon, QPainter, QColor, QImage, QPixmap
 from PyQt5.QtCore import Qt, QSize
 
@@ -53,7 +53,7 @@ class VoicesSystemTray:
         # İlk ikonu ayarla
         self.update_icon()
         
-        # Sol tıklama için sinyal bağlantısı
+        # Sol ve sağ tıklama için sinyal bağlantısı
         self.tray.activated.connect(self.handle_tray_activation)
         
         # Tray ikonunu göster
@@ -62,6 +62,8 @@ class VoicesSystemTray:
     def handle_tray_activation(self, reason):
         if reason == QSystemTrayIcon.Trigger:  # Sol tıklama
             self.toggle_active_state()
+        elif reason == QSystemTrayIcon.Context:  # Sağ tıklama
+            self.app.quit()
     
     def run(self):
         sys.exit(self.app.exec_())
